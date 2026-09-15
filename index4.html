@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achai Ridho Dhavita | Portofolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05060B;
+    --surface:#10121B;
+    --surface-2:#151827;
+    --border:rgba(255,255,255,0.09);
+    --border-hi:rgba(255,255,255,0.2);
+    --text:#F5F6FA;
+    --muted:#9099AC;
+    --muted-2:#5B6478;
+    --blue:#3D5AFE;
+    --blue-dim:#2A3FC0;
+    --blue-soft:rgba(61,90,254,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+  }
+  body.locked{overflow:hidden;height:100vh;}
+  h1,h2,h3,.display{font-family:'Sora',sans-serif;font-weight:700;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:'Inter',sans-serif;}
+  img,svg{display:block;max-width:100%;}
+  .blue{color:var(--blue);}
+  section{position:relative;padding:130px 0 90px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+  @media (max-width:640px){.wrap{padding:0 20px;} section{padding:110px 0 70px;}}
+
+  /* ================= STARFIELD ================= */
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3.2s ease-in-out infinite;}
+  @keyframes twinkle{0%,100%{opacity:.25;}50%{opacity:.9;}}
+  .shooting{
+    position:absolute;
+    width:140px;height:1px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.9));
+    transform:rotate(35deg);
+    animation:shoot 7s linear infinite;
+    opacity:0;
+  }
+  .shooting::after{
+    content:"";position:absolute;right:0;top:-1.5px;width:4px;height:4px;border-radius:50%;
+    background:#fff;box-shadow:0 0 8px 2px rgba(255,255,255,0.9);
+  }
+  @keyframes shoot{
+    0%{opacity:0; transform:translate(-60px,-60px) rotate(35deg);}
+    4%{opacity:1;}
+    18%{opacity:0; transform:translate(420px,300px) rotate(35deg);}
+    100%{opacity:0;}
+  }
+
+  /* ================= PRELOADER ================= */
+  #preloader{
+    position:fixed;inset:0;z-index:200;
+    background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    transition:opacity .6s ease, visibility .6s ease;
+  }
+  #preloader.hide{opacity:0;visibility:hidden;}
+  .bolt{width:220px;height:420px;position:absolute;top:8%;opacity:.9;filter:drop-shadow(0 0 18px rgba(120,170,255,0.8));animation:flicker 2.6s ease-in-out infinite;}
+  @keyframes flicker{0%,100%{opacity:.55;}20%{opacity:1;}35%{opacity:.4;}50%{opacity:.95;}70%{opacity:.6;}85%{opacity:1;}}
+  .preload-text{position:relative;z-index:2;}
+  .preload-text h2{font-size:clamp(1.6rem,5vw,2.6rem);line-height:1.2;color:var(--muted);}
+  .preload-text h2 b{color:var(--blue);display:block;font-size:clamp(2rem,6.5vw,3.4rem);}
+  .loadbar-row{
+    margin-top:34px;display:flex;align-items:center;gap:22px;
+    font-family:'Sora',sans-serif;font-weight:600;color:var(--text);
+  }
+  .loadbar{width:260px;height:2px;background:rgba(255,255,255,0.18);position:relative;}
+  .loadbar i{position:absolute;left:0;top:0;bottom:0;background:#fff;width:0%;transition:width .1s linear;}
+
+  /* ================= FLOATING NAV ================= */
+  #navwrap{
+    position:fixed;top:26px;left:50%;
+    transform:translateX(-50%);
+    z-index:100;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .mascot{
+    width:34px;height:34px;
+    background:#fff;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:-4px;
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    animation:mascotbob 3s ease-in-out infinite;
+    position:relative;
+    box-shadow:0 4px 14px rgba(0,0,0,0.4);
+  }
+  .mascot::after{
+    content:"";position:absolute;bottom:-5px;left:50%;transform:translateX(-50%) rotate(45deg);
+    width:9px;height:9px;background:#fff;
+  }
+  @keyframes mascotbob{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+  .mascot svg{width:16px;}
+  .pillnav{
+    display:flex;gap:4px;
+    background:rgba(16,18,27,0.88);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:100px;
+    padding:6px;
+  }
+  .pillnav button{
+    border:none;background:transparent;color:var(--muted);
+    padding:11px 22px;border-radius:100px;
+    font-weight:600;font-size:.9rem;cursor:pointer;
+    transition:background .25s ease, color .25s ease;
+  }
+  .pillnav button.active{background:var(--surface-2);color:#fff;}
+  @media (max-width:640px){
+    .pillnav{gap:0;}
+    .pillnav button{padding:9px 12px;font-size:.76rem;}
+  }
+
+  /* ================= BUTTONS ================= */
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:13px 24px;border-radius:9px;
+    font-weight:600;font-size:.92rem;cursor:pointer;
+    border:1px solid var(--border-hi);
+    background:transparent;color:var(--text);
+    transition:transform .18s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--blue);border:none;color:#fff;box-shadow:0 10px 24px rgba(61,90,254,0.35);}
+  .btn-primary:hover{background:#4E6BFF;}
+  .btn-ghost:hover{background:var(--surface);}
+  .btn svg{width:15px;height:15px;}
+
+  /* ================= HOME ================= */
+  #home{min-height:100vh;display:flex;align-items:center;}
+  .homegrid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:start;width:100%;}
+  @media (max-width:860px){.homegrid{grid-template-columns:1fr;}}
+  #home h1{font-size:clamp(2.4rem,6vw,4rem);line-height:1.08;margin-bottom:18px;}
+  .role{color:var(--blue);font-weight:600;font-size:1.05rem;margin-bottom:20px;}
+  #home p.desc{color:var(--muted);line-height:1.8;max-width:52ch;margin-bottom:32px;font-size:1.02rem;}
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+  .findme-label{font-family:'Sora',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.06em;color:var(--text);margin-bottom:14px;}
+  .findrow{display:flex;gap:10px;}
+  .iconbtn{
+    width:44px;height:44px;border-radius:10px;
+    background:var(--surface);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .iconbtn:hover{border-color:var(--blue);transform:translateY(-2px);}
+  .iconbtn svg{width:19px;height:19px;}
+
+  .nowcard{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:26px;
+  }
+  .nowcard h3{font-size:1.15rem;margin-bottom:2px;}
+  .nowcard .sub{color:var(--muted);font-size:.86rem;margin-bottom:18px;}
+  .nowplay{
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:16px;
+  }
+  .nowplay-top{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+  .nowplay-art{
+    width:52px;height:52px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(135deg, var(--blue), #7C3AED);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Sora',sans-serif;font-weight:700;color:#fff;font-size:.95rem;
+  }
+  .nowplay-top strong{display:block;font-size:1rem;}
+  .nowplay-top span{color:var(--muted);font-size:.82rem;}
+  .nowplay-link{
+    margin-top:8px;
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--blue);font-weight:600;font-size:.82rem;
+  }
+  .tracklist li{
+    list-style:none;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 0;border-top:1px solid var(--border);
+    font-size:.86rem;
+  }
+  .tracklist li b{font-weight:600;display:block;}
+  .tracklist li span.sub{color:var(--muted-2);font-size:.76rem;}
+  .tracklist li .yr{color:var(--muted);font-size:.78rem;font-weight:600;}
+
+  /* ================= SECTION HEAD ================= */
+  .sechead{text-align:center;margin-bottom:50px;}
+  .sechead h2{font-size:clamp(2rem,5vw,3rem);}
+  .sechead p{color:var(--muted);margin-top:10px;}
+
+  /* ================= ABOUT ================= */
+  .aboutgrid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;margin-bottom:80px;}
+  @media (max-width:820px){.aboutgrid{grid-template-columns:1fr;}}
+  .abouttitle{font-size:clamp(2rem,5.4vw,3.1rem);line-height:1.12;margin-bottom:22px;}
+  .abouttitle .lead{color:var(--blue);display:block;font-size:.55em;font-weight:600;margin-bottom:6px;}
+  .aboutbtnrow{margin-top:24px;}
+  #about .rightcol p{color:var(--muted);line-height:1.85;font-size:1.02rem;margin-bottom:22px;}
+  .photoframe{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    aspect-ratio:3/4;
+    background:radial-gradient(circle at 50% 30%, #1a1e2e 0%, #05060B 78%);
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--border);
+  }
+  .photoframe .placeholder-ph{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted-2);}
+  .photoframe img{width:100%;height:100%;object-fit:cover;}
+
+  .subhead2{font-family:'Sora',sans-serif;font-weight:700;font-size:1.15rem;margin-bottom:18px;}
+  .p3grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:56px;}
+  @media (max-width:760px){.p3grid{grid-template-columns:1fr;}}
+  .infocard{
+    display:flex;gap:16px;align-items:flex-start;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:14px;padding:20px;margin-bottom:14px;
+  }
+  .infocard:last-child{margin-bottom:0;}
+  .badge{
+    width:46px;height:46px;border-radius:10px;flex-shrink:0;
+    background:var(--blue-soft);color:var(--blue);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Sora',sans-serif;font-weight:700;font-size:.82rem;
+  }
+  .infocard h3{font-size:.98rem;margin-bottom:2px;}
+  .infocard .sub{color:var(--muted);font-size:.84rem;margin-bottom:4px;}
+  .infocard .yr{color:var(--blue);font-size:.78rem;font-weight:600;}
+  .infocard p{color:var(--muted);font-size:.82rem;line-height:1.55;margin-top:6px;}
+
+  .statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media (max-width:680px){.statrow{grid-template-columns:1fr;}}
+  .statcard{
+    position:relative;overflow:hidden;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:16px;padding:24px;
+  }
+  .statcard::before{
+    content:"";position:absolute;top:-40px;right:-40px;width:110px;height:110px;
+    background:radial-gradient(circle, rgba(61,90,254,0.35), transparent 70%);
+  }
+  .statcard .sicon{
+    width:38px;height:38px;border-radius:9px;background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;margin-bottom:26px;
+  }
+  .statcard .num{font-family:'Sora',sans-serif;font-size:2.4rem;font-weight:700;line-height:1;margin-bottom:8px;}
+  .statcard .lbl{font-family:'Sora',sans-serif;font-weight:700;font-size:.86rem;text-transform:uppercase;letter-spacing:.04em;}
+  .statcard .desc{color:var(--muted);font-size:.82rem;margin-top:4px;}
+
+  /* ================= PORTFOLIO ================= */
+  .tabrow{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:50px;}
+  .tabbtn{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    padding:18px 30px;border-radius:14px;
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--muted);cursor:pointer;
+    font-family:'Sora',sans-serif;font-weight:600;font-size:.88rem;
+    transition:all .2s ease;
+  }
+  .tabbtn.active{background:var(--blue-soft);border-color:var(--blue);color:#fff;}
+  .tabbtn svg{width:20px;height:20px;}
+  .tabpanel{display:none;}
+  .tabpanel.active{display:block;}
+
+  .projgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:900px){.projgrid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:620px){.projgrid{grid-template-columns:1fr;}}
+  .pcard{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .pcard:hover{border-color:var(--blue);transform:translateY(-3px);}
+  .pthumb{
+    height:120px;
+    background:linear-gradient(135deg, var(--blue-dim), #191c2c);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Sora',sans-serif;font-weight:800;font-size:1.8rem;color:rgba(255,255,255,0.85);
+  }
+  .pbody{padding:20px;}
+  .pbody h3{font-size:1rem;margin-bottom:8px;}
+  .pbody p{color:var(--muted);font-size:.86rem;line-height:1.6;}
+  .pcard details summary{
+    list-style:none;cursor:pointer;
+    margin-top:14px;color:var(--blue);font-weight:600;font-size:.84rem;
+    display:flex;align-items:center;gap:6px;
+  }
+  .pcard details summary::-webkit-details-marker{display:none;}
+  .pcard details[open] summary svg{transform:rotate(90deg);}
+  .pcard details summary svg{width:13px;transition:transform .2s ease;}
+
+  .empty-state{
+    text-align:center;padding:60px 20px;
+    border:1px dashed var(--border-hi);border-radius:18px;
+    color:var(--muted);
+  }
+  .empty-state h3{color:var(--text);margin-bottom:8px;font-size:1.1rem;}
+  .empty-state .add{color:var(--blue);font-weight:600;margin-top:10px;display:inline-block;font-size:.86rem;}
+
+  .skillgrid{display:flex;flex-wrap:wrap;gap:12px;}
+  .skillchip{
+    padding:12px 20px;border-radius:100px;
+    background:var(--surface);border:1px solid var(--border);
+    font-family:'Sora',sans-serif;font-weight:600;font-size:.86rem;
+    transition:border-color .2s ease;
+  }
+  .skillchip:hover{border-color:var(--blue);}
+
+  /* ---- gallery fan ---- */
+  .gallery{padding-top:70px;}
+  .fanwrap{
+    display:flex;justify-content:center;align-items:center;
+    gap:-20px;
+    padding:20px 0 10px;
+    flex-wrap:wrap;
+  }
+  .fanframe{
+    width:150px;height:190px;margin:0 -14px;
+    border-radius:12px;
+    border:1px dashed var(--border-hi);
+    background:var(--surface);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;color:var(--muted-2);font-size:.72rem;text-align:center;padding:10px;
+    transition:transform .25s ease;
+  }
+  .fanframe:nth-child(1){transform:rotate(-9deg) translateY(10px);}
+  .fanframe:nth-child(2){transform:rotate(-4deg) translateY(2px);}
+  .fanframe:nth-child(3){transform:rotate(0deg) translateY(-8px); border-color:var(--blue); z-index:2;}
+  .fanframe:nth-child(4){transform:rotate(4deg) translateY(2px);}
+  .fanframe:nth-child(5){transform:rotate(9deg) translateY(10px);}
+  .fanframe:hover{transform:translateY(-6px) scale(1.03) !important;}
+  @media (max-width:700px){
+    .fanframe{width:110px;height:140px;margin:6px;}
+    .fanframe:nth-child(n){transform:none !important;}
+  }
+
+  /* ================= CONTACT ================= */
+  .contactgrid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  @media (max-width:840px){.contactgrid{grid-template-columns:1fr;}}
+  .field{
+    display:flex;align-items:center;gap:12px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:12px;padding:16px 18px;margin-bottom:16px;
+  }
+  .field svg{width:17px;height:17px;color:var(--muted);flex-shrink:0;}
+  .field input,.field textarea{
+    background:transparent;border:none;outline:none;color:var(--text);
+    width:100%;font-family:'Inter',sans-serif;font-size:.94rem;resize:none;
+  }
+  .field textarea{min-height:90px;padding-top:2px;}
+  .field input::placeholder,.field textarea::placeholder{color:var(--muted-2);}
+  .submitbtn{
+    width:100%;padding:15px;border-radius:12px;
+    background:var(--blue);color:#fff;border:none;
+    font-weight:700;font-size:.94rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    transition:background .2s ease;
+  }
+  .submitbtn:hover{background:#4E6BFF;}
+
+  .guestbook{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;}
+  .guestbook h3{font-size:1rem;margin-bottom:16px;}
+  .commentlist{margin-top:20px;display:flex;flex-direction:column;gap:14px;max-height:260px;overflow-y:auto;}
+  .comment{display:flex;gap:12px;align-items:flex-start;}
+  .avatar{
+    width:36px;height:36px;border-radius:50%;flex-shrink:0;
+    background:var(--blue-soft);color:var(--blue);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Sora',sans-serif;font-weight:700;font-size:.8rem;
+  }
+  .comment .name{font-weight:700;font-size:.86rem;}
+  .comment .time{color:var(--muted-2);font-size:.72rem;margin-left:8px;font-weight:400;}
+  .comment p{color:var(--muted);font-size:.84rem;margin-top:2px;}
+
+  .findme-cards{margin-top:56px;}
+  .findme-cards .findme-label{margin-bottom:18px;}
+  .fmgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:700px){.fmgrid{grid-template-columns:1fr;}}
+  .fmcard{
+    display:flex;align-items:center;gap:14px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:14px;padding:16px 18px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .fmcard:hover{border-color:var(--blue);transform:translateY(-2px);}
+  .fmicon{
+    width:42px;height:42px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--surface-2);
+  }
+  .fmicon svg{width:20px;height:20px;}
+  .fmcard b{display:block;font-size:.9rem;}
+  .fmcard span{color:var(--muted);font-size:.8rem;}
+
+  footer{text-align:center;padding:50px 20px 34px;color:var(--muted-2);font-size:.8rem;position:relative;z-index:1;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;}
+  }
+</style>
+</head>
+<body class="locked">
+
+<!-- ================= PRELOADER ================= -->
+<div id="preloader">
+  <svg class="bolt" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+    <path d="M120,0 L60,180 L100,180 L40,400 L150,150 L105,150 L160,0 Z" fill="none" stroke="#8FB4FF" stroke-width="3"/>
+  </svg>
+  <div class="preload-text">
+    <h2>Selamat Datang di<b>Portofolio Saya</b></h2>
+  </div>
+  <div class="loadbar-row">
+    <span>Memuat</span>
+    <div class="loadbar"><i id="loadfill"></i></div>
+    <span id="loadpct">0%</span>
+  </div>
+</div>
+
+<div id="stars"></div>
+
+<!-- ================= FLOATING NAV ================= -->
+<div id="navwrap">
+  <div class="mascot" id="mascot">
+    <svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="12" r="1.4" fill="#05060B"/><circle cx="16" cy="12" r="1.4" fill="#05060B"/><path d="M9 16q3 2 6 0" stroke="#05060B" stroke-width="1.4" stroke-linecap="round"/></svg>
+  </div>
+  <div class="pillnav" id="pillnav">
+    <button data-target="home" class="active">Beranda</button>
+    <button data-target="about">Profil</button>
+    <button data-target="portfolio">Portofolio</button>
+    <button data-target="contact">Kontak</button>
+  </div>
+</div>
+
+<main>
+<!-- ================= HOME ================= -->
+<section id="home">
+  <div class="wrap homegrid">
+    <div>
+      <h1><span class="blue">Mendalami Sains,</span><br>Menjaga Alam.</h1>
+      <div class="role">Mahasiswa Biologi Lingkungan</div>
+      <p class="desc">Berfokus pada biologi lingkungan, K3 (HSE), dan analisis laboratorium — memadukan ketelitian ilmiah dengan kepemimpinan organisasi di Universitas Airlangga.</p>
+      <div class="btnrow">
+        <a class="btn btn-primary" href="#portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+          Portofolio
+        </a>
+        <a class="btn btn-ghost" href="#contact">
+          Hubungi Saya
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <div class="findme-label">TEMUKAN SAYA</div>
+      <div class="findrow">
+        <a class="iconbtn" href="https://www.linkedin.com/in/achai-ridho-dhavita" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="#3D5AFE"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zM8.5 8h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05C20.5 8 22 10.5 22 14.2V23h-4v-7.9c0-1.9-.03-4.3-2.6-4.3-2.6 0-3 2-3 4.2V23h-4V8z"/></svg>
+        </a>
+        <a class="iconbtn" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3D5AFE" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1"/></svg>
+        </a>
+        <a class="iconbtn" href="https://wa.me/6285143105492" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="#3D5AFE"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.7 14.3c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.4 0 .6-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.8.3.2.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.7-.1.3.1 1.8.9 2.1 1s.5.2.6.4c.1.2.1.9-.1 1.6z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="nowcard">
+      <h3>Sedang Aktif</h3>
+      <div class="sub">Program kerja &amp; peran saat ini</div>
+      <div class="nowplay">
+        <div class="nowplay-top">
+          <div class="nowplay-art">HMB</div>
+          <div>
+            <strong>Kepala Divisi Keilmuan</strong>
+            <span>Himpunan Mahasiswa Biologi</span>
+          </div>
+        </div>
+        <a class="nowplay-link" href="#about">
+          Lihat semua peran
+          <svg width="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <ul class="tracklist">
+        <li><div><b>Staff Divisi KASTRAT</b><span class="sub">BEM FST — Unair</span></div><span class="yr">2026</span></li>
+        <li><div><b>Staff Mendinfo</b><span class="sub">UKM Penalaran</span></div><span class="yr">2025</span></li>
+        <li><div><b>Asisten Praktikum</b><span class="sub">Anatomi Hewan</span></div><span class="yr">Aktif</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="aboutgrid">
+      <div>
+        <h2 class="abouttitle"><span class="lead">Hi, saya</span>Achai Ridho<br>Dhavita</h2>
+        <a class="btn btn-primary aboutbtnrow" href="#" onclick="return false;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+          Lihat CV
+        </a>
+      </div>
+      <div class="photoframe">
+        <!-- Ganti div di bawah dengan <img src="foto-anda.jpg" alt="Achai Ridho Dhavita"> setelah foto tersedia -->
+        <div class="placeholder-ph">
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#5B6478" stroke-width="1.6"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6" stroke="#5B6478" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span>Foto Anda di sini</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rightcol" style="max-width:640px;margin:-30px auto 70px;text-align:center;">
+      <p>Mahasiswa S1 Biologi Universitas Airlangga dengan keahlian teknis di bidang Biologi Lingkungan, K3 (HSE), dan Analisis Laboratorium. Memiliki rekam jejak kepemimpinan mengelola divisi keilmuan serta pengalaman praktis sebagai Asisten Praktikum yang menerapkan SOP/K3 secara presisi.</p>
+      <a class="btn btn-ghost" href="#portfolio" style="margin:0 auto;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+        Lihat Proyek
+      </a>
+    </div>
+
+    <div class="p3grid">
+      <div>
+        <div class="subhead2">Pendidikan</div>
+        <div class="infocard">
+          <div class="badge">UA</div>
+          <div>
+            <h3>Universitas Airlangga</h3>
+            <div class="sub">S1 Biologi</div>
+            <div class="yr">2023 – Sekarang</div>
+          </div>
+        </div>
+        <div class="infocard">
+          <div class="badge">MAN</div>
+          <div>
+            <h3>MAN 3 Malang</h3>
+            <div class="sub">MIPA DG</div>
+            <div class="yr">2023 – 2024</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="subhead2">Pengalaman</div>
+        <div class="infocard">
+          <div class="badge">HMB</div>
+          <div>
+            <h3>Kepala Divisi Keilmuan</h3>
+            <div class="sub">Himpunan Mahasiswa Biologi</div>
+            <div class="yr">2026 – Sekarang</div>
+          </div>
+        </div>
+        <div class="infocard">
+          <div class="badge">BEM</div>
+          <div>
+            <h3>Staff Divisi KASTRAT</h3>
+            <div class="sub">BEM FST, Unair</div>
+            <div class="yr">2026 – Sekarang</div>
+          </div>
+        </div>
+        <div class="infocard">
+          <div class="badge">UKM</div>
+          <div>
+            <h3>Staff Mendinfo</h3>
+            <div class="sub">UKM Penalaran, Unair</div>
+            <div class="yr">2025 – Sekarang</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="statrow">
+      <div class="statcard">
+        <div class="sicon"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg></div>
+        <div class="num">7</div>
+        <div class="lbl">Proyek</div>
+        <div class="desc">Kontribusi lintas acara &amp; komunitas</div>
+      </div>
+      <div class="statcard">
+        <div class="sicon"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L6 22l6-3 6 3-2.5-8.5"/></svg></div>
+        <div class="num">—</div>
+        <div class="lbl">Sertifikat</div>
+        <div class="desc">Belum ditambahkan</div>
+      </div>
+      <div class="statcard">
+        <div class="sicon"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M5 4H3v2a4 4 0 004 4"/><path d="M19 4h2v2a4 4 0 01-4 4"/></svg></div>
+        <div class="num">—</div>
+        <div class="lbl">Penghargaan</div>
+        <div class="desc">Belum ditambahkan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Portofolio</h2>
+      <p>Proyek, sertifikat, penghargaan, dan keahlian saya.</p>
+    </div>
+
+    <div class="tabrow">
+      <button class="tabbtn active" data-tab="tab-proyek">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+        Proyek
+      </button>
+      <button class="tabbtn" data-tab="tab-sertifikat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L6 22l6-3 6 3-2.5-8.5"/></svg>
+        Sertifikat
+      </button>
+      <button class="tabbtn" data-tab="tab-penghargaan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 01-10 0V4z"/></svg>
+        Penghargaan
+      </button>
+      <button class="tabbtn" data-tab="tab-keahlian">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 01-4 0v-.09A1.7 1.7 0 009 19.4a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.6 15a1.7 1.7 0 00-1.55-1H3a2 2 0 010-4h.09A1.7 1.7 0 004.6 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.6a1.7 1.7 0 001-1.55V3a2 2 0 014 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.4 9a1.7 1.7 0 001.55 1H21a2 2 0 010 4h-.09a1.7 1.7 0 00-1.51 1z"/></svg>
+        Keahlian
+      </button>
+    </div>
+
+    <div id="tab-proyek" class="tabpanel active">
+      <div class="projgrid">
+        <div class="pcard"><div class="pthumb">AC</div><div class="pbody"><h3>Host — ACT Podcast 2026</h3><p>Memandu diskusi UKM Penalaran agar tetap menarik dan informatif bagi pendengar.</p></div></div>
+        <div class="pcard"><div class="pthumb">MS</div><div class="pbody"><h3>Koordinator Markom — Master Speaker 2026</h3><p>Strategi promosi, publikasi, dan kerja sama sponsor maupun media partner.</p></div></div>
+        <div class="pcard"><div class="pthumb">VP</div><div class="pbody"><h3>Koordinator Humas — Visual Pro 2026</h3><p>Publikasi lomba serta komunikasi dengan peserta dan sponsor.</p></div></div>
+        <div class="pcard"><div class="pthumb">ST</div><div class="pbody"><h3>Koordinator Medis — STUBAN</h3><p>Kesiapan medis dan keamanan selama kegiatan berlangsung.</p></div></div>
+        <div class="pcard"><div class="pthumb">BV</div><div class="pbody"><h3>Staff Ahli Medis — BIOVISTA 2026</h3><p>Pendampingan divisi medis dan penanganan kesehatan acara.</p></div></div>
+        <div class="pcard"><div class="pthumb">BE</div><div class="pbody"><h3>Staff Ahli Web — BESC 2026</h3><p>Pengelolaan situs dan koordinasi teknis kebutuhan digital acara.</p></div></div>
+        <div class="pcard"><div class="pthumb">UK</div><div class="pbody"><h3>Pengajar — UKMKI Mengajar</h3><p>Membuat bahan ajar sederhana dan interaktif, serta mendampingi kegiatan belajar.</p></div></div>
+      </div>
+    </div>
+
+    <div id="tab-sertifikat" class="tabpanel">
+      <div class="empty-state">
+        <h3>Belum ada sertifikat ditambahkan</h3>
+        <p>Kirim nama sertifikat, penerbit, dan tahun perolehannya.</p>
+        <span class="add">+ Tambahkan sertifikat Anda</span>
+      </div>
+    </div>
+
+    <div id="tab-penghargaan" class="tabpanel">
+      <div class="empty-state">
+        <h3>Belum ada penghargaan ditambahkan</h3>
+        <p>Kirim nama penghargaan, penyelenggara, dan tahunnya.</p>
+        <span class="add">+ Tambahkan penghargaan Anda</span>
+      </div>
+    </div>
+
+    <div id="tab-keahlian" class="tabpanel">
+      <div class="skillgrid">
+        <span class="skillchip">Teknik &amp; Pengawasan Laboratorium</span>
+        <span class="skillchip">Dasar-Dasar K3 (HSE)</span>
+        <span class="skillchip">Analisis &amp; Pengolahan Data Ilmiah</span>
+        <span class="skillchip">Pengoperasian Alat Praktikum &amp; Analisis Sampel</span>
+        <span class="skillchip">Desain Grafis &amp; Media Digital</span>
+        <span class="skillchip">Manajemen Kegiatan &amp; Kepemimpinan</span>
+        <span class="skillchip">Komunikasi Publik &amp; Koordinasi Tim</span>
+        <span class="skillchip">Manajemen Media Sosial &amp; Dokumentasi</span>
+      </div>
+    </div>
+
+    <div class="gallery">
+      <div class="subhead2" style="text-align:center;">Galeri Kegiatan</div>
+      <div class="fanwrap">
+        <div class="fanframe">+ Foto kegiatan 1</div>
+        <div class="fanframe">+ Foto kegiatan 2</div>
+        <div class="fanframe">+ Foto kegiatan 3</div>
+        <div class="fanframe">+ Foto kegiatan 4</div>
+        <div class="fanframe">+ Foto kegiatan 5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sechead">
+      <h2>Hubungi Saya</h2>
+      <p>Terbuka untuk Kerja Praktik, penelitian, atau kolaborasi.</p>
+    </div>
+
+    <div class="contactgrid">
+      <form id="contactform" onsubmit="return sendMail(event)">
+        <div class="field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+          <input type="text" placeholder="Nama Anda" id="cf-name" required>
+        </div>
+        <div class="field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+          <input type="email" placeholder="Email Anda" id="cf-email" required>
+        </div>
+        <div class="field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="align-self:flex-start;margin-top:2px;"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <textarea placeholder="Pesan Anda" id="cf-msg" required></textarea>
+        </div>
+        <button class="submitbtn" type="submit">
+          <svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Kirim Pesan
+        </button>
+      </form>
+
+      <div class="guestbook">
+        <h3>Tinggalkan Jejak</h3>
+        <div class="field"><input type="text" id="gb-name" placeholder="Nama Anda"></div>
+        <div class="field"><textarea id="gb-msg" placeholder="Tulis komentar Anda di sini..."></textarea></div>
+        <button class="submitbtn" onclick="addComment()" type="button">
+          <svg width="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Kirim Komentar
+        </button>
+        <div class="commentlist" id="commentlist">
+          <div class="comment">
+            <div class="avatar">A</div>
+            <div>
+              <span class="name">Achai<span class="time">Baru saja</span></span>
+              <p>Selamat datang di portofolio saya — tinggalkan jejakmu di sini 👋</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="findme-cards">
+      <div class="findme-label">TEMUKAN SAYA</div>
+      <div class="fmgrid">
+        <a class="fmcard" href="https://www.linkedin.com/in/achai-ridho-dhavita" target="_blank" rel="noopener">
+          <div class="fmicon"><svg viewBox="0 0 24 24" fill="#3D5AFE"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zM8.5 8h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05C20.5 8 22 10.5 22 14.2V23h-4v-7.9c0-1.9-.03-4.3-2.6-4.3-2.6 0-3 2-3 4.2V23h-4V8z"/></svg></div>
+          <div><b>Terhubung</b><span>di LinkedIn</span></div>
+        </a>
+        <a class="fmcard" href="#" target="_blank" rel="noopener">
+          <div class="fmicon"><svg viewBox="0 0 24 24" fill="none" stroke="#3D5AFE" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1"/></svg></div>
+          <div><b>Instagram</b><span>@achaidhavita</span></div>
+        </a>
+        <a class="fmcard" href="https://wa.me/6285143105492" target="_blank" rel="noopener">
+          <div class="fmicon"><svg viewBox="0 0 24 24" fill="#3D5AFE"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.7 14.3c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-.9-.3-1.6-.6-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 .9-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.2.1.4 0 .6-.1.2-.1.3-.3.5-.1.2-.3.4-.4.5-.2.2-.4.4-.2.7.2.3.9 1.5 2 2.4 1.4 1.2 2.5 1.6 2.8 1.8.3.2.5.1.7-.1.2-.2.8-.9 1-1.2.2-.3.4-.2.7-.1.3.1 1.8.9 2.1 1s.5.2.6.4c.1.2.1.9-.1 1.6z"/></svg></div>
+          <div><b>WhatsApp</b><span>+62 851-4310-5492</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 Achai Ridho Dhavita</footer>
+
+<script>
+  /* ---------- Preloader ---------- */
+  const pct = document.getElementById('loadpct');
+  const fill = document.getElementById('loadfill');
+  let p = 0;
+  const timer = setInterval(() => {
+    p += Math.random()*9 + 3;
+    if (p >= 100) { p = 100; clearInterval(timer); }
+    pct.textContent = Math.floor(p) + '%';
+    fill.style.width = p + '%';
+    if (p === 100) {
+      setTimeout(() => {
+        document.getElementById('preloader').classList.add('hide');
+        document.body.classList.remove('locked');
+      }, 350);
+    }
+  }, 130);
+
+  /* ---------- Starfield ---------- */
+  const starsEl = document.getElementById('stars');
+  for (let i=0;i<70;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2 + 1;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    starsEl.appendChild(s);
+  }
+  for (let i=0;i<3;i++){
+    const sh = document.createElement('div');
+    sh.className = 'shooting';
+    sh.style.top = (Math.random()*60)+'%';
+    sh.style.left = (Math.random()*60)+'%';
+    sh.style.animationDelay = (i*3.4)+'s';
+    starsEl.appendChild(sh);
+  }
+
+  /* ---------- Nav scrollspy + mascot ---------- */
+  const navBtns = [...document.querySelectorAll('.pillnav button')];
+  const mascot = document.getElementById('mascot');
+  const pillnav = document.getElementById('pillnav');
+  const sections = navBtns.map(b => document.getElementById(b.dataset.target));
+
+  function moveMascot(btn){
+    const navRect = pillnav.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const offset = (btnRect.left + btnRect.width/2) - (navRect.left + navRect.width/2);
+    mascot.style.transform = 'translateX(' + offset + 'px)';
+  }
+
+  navBtns.forEach(b => b.addEventListener('click', () => {
+    document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth'});
+  }));
+
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio > 0.4) {
+        const id = e.target.id;
+        navBtns.forEach(b => {
+          const active = b.dataset.target === id;
+          b.classList.toggle('active', active);
+          if (active) moveMascot(b);
+        });
+      }
+    });
+  }, {threshold:[0.4]});
+  sections.forEach(s => spy.observe(s));
+  window.addEventListener('load', () => moveMascot(navBtns[0]));
+  window.addEventListener('resize', () => {
+    const activeBtn = navBtns.find(b => b.classList.contains('active'));
+    if (activeBtn) moveMascot(activeBtn);
+  });
+
+  /* ---------- Portfolio tabs ---------- */
+  document.querySelectorAll('.tabbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tabpanel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ---------- Contact form (mailto) ---------- */
+  function sendMail(e){
+    e.preventDefault();
+    const name = document.getElementById('cf-name').value;
+    const email = document.getElementById('cf-email').value;
+    const msg = document.getElementById('cf-msg').value;
+    const body = encodeURIComponent(`Nama: ${name}\nEmail: ${email}\n\n${msg}`);
+    window.location.href = `mailto:achaidhavita71@gmail.com?subject=Pesan dari Portofolio&body=${body}`;
+    return false;
+  }
+
+  /* ---------- Guestbook (session only) ---------- */
+  function addComment(){
+    const name = document.getElementById('gb-name').value.trim();
+    const msg = document.getElementById('gb-msg').value.trim();
+    if (!name || !msg) return;
+    const list = document.getElementById('commentlist');
+    const item = document.createElement('div');
+    item.className = 'comment';
+    item.innerHTML = `<div class="avatar">${name.charAt(0).toUpperCase()}</div>
+      <div><span class="name">${name}<span class="time">Baru saja</span></span><p></p></div>`;
+    item.querySelector('p').textContent = msg;
+    list.prepend(item);
+    document.getElementById('gb-name').value = '';
+    document.getElementById('gb-msg').value = '';
+  }
+</script>
+</body>
+</html>
